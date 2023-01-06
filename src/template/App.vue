@@ -54,14 +54,14 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 100%;
-}
-
 .mdContainer {
   width: 60%;
   overflow: hidden;
   margin: 0 auto;
-  font-family: "JetBrains Mono NL", "Noto Sans SC", serif;
+  font-family: "JtBrains Mono NL", "Noto Sans SC", serif;
+}
+
+img {
+  width: 100%;
 }
 </style>
