@@ -8,8 +8,8 @@ import {marked} from "marked";
 import hljs from "highlight.js";
 import axios from "axios";
 
-// import "../style/common.css"
 
+import "../style/common.css"
 import "jetbrains-mono-webfont/jetbrains-mono.css"
 import "github-markdown-css/github-markdown.css"
 import "highlight.js/styles/github.css"
@@ -18,31 +18,28 @@ export default {
   setup() {
     const mdURL: string = "<apiServer>";
     const mdContainer: Ref = ref();
+    const renderMarkdown: marked.Renderer = new marked.Renderer();
+
+    marked.setOptions({
+      renderer: renderMarkdown,
+      highlight: (code: string) => {
+        return hljs.highlightAuto(code).value;
+      }
+    })
 
     onMounted(() => {
-      axios.get(mdURL)
-          .then(
-              (response) => {
-                if (response.status !== 200) return null;
-                return response.data
-              }
-          )
-          .then(
-              (data) => {
-                if (!data) return;
-
-                const renderMarkdown: marked.Renderer = new marked.Renderer();
-
-                marked.setOptions({
-                  renderer: renderMarkdown,
-                  highlight: (code: string) => {
-                    return hljs.highlightAuto(code).value;
-                  }
-                })
-
-                mdContainer.value.innerHTML = marked(data as string)
-              }
-          )
+      axios.get(mdURL).then(
+          response => {
+            return response.data
+          },
+          failure => {
+            return failure.response.data
+          }
+      ).then(
+          data => {
+            mdContainer.value.innerHTML = marked(data as string)
+          }
+      )
     })
 
     return {
@@ -54,7 +51,7 @@ export default {
 
 <style scoped>
 .mdContainer {
-  width: 60%;
+  /*width: 60%;*/
   overflow: hidden;
   margin: 0 auto;
   font-family: "JtBrains Mono NL", "Noto Sans SC", serif;
