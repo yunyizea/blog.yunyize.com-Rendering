@@ -16,8 +16,7 @@ import "highlight.js/styles/github.css"
 
 export default {
   setup() {
-    // const mdURL: string = "http://127.0.0.1:8888/%E4%BA%91%E8%B5%9B%E6%96%87%E6%A1%A3.md";
-    const mdURL: string = "http://127.0.0.1:8888/lam.md";
+    const mdURL: string = "<apiServer>";
     const mdContainer: Ref = ref();
 
     onMounted(() => {
